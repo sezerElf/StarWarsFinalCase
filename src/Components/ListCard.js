@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import ReactPaginate from "react-paginate";
+import { Link } from "react-router-dom";
+import ShipCard from "./ShipCard"
 import { Button, Card, Pagination } from "react-bootstrap";
 
 export default function ListCard() {
@@ -9,6 +10,8 @@ export default function ListCard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [search, setSearch] = useState("");
+  
+
 
   useEffect(() => {
     getShip();
@@ -42,6 +45,8 @@ export default function ListCard() {
 
     return buttons;
   };
+
+  
 
   return (
     <>
@@ -81,6 +86,7 @@ export default function ListCard() {
               }}
             >
               {ships.results.map((ship, key) => (
+                
                 <Card
                   className="mt-3 mb-3"
                   key={key}
@@ -100,16 +106,17 @@ export default function ListCard() {
                     <Card.Text>
                       Hyperdrive Rating : {ship.hyperdrive_rating}
                     </Card.Text>
-                    
-                    
                   </Card.Body>
-                  <Card.Footer style={{borderTopStyle:"none"}}>
-                  <Button
-                      variant="outline-secondary"
-                      style={{ marginTop: "auto" }}
-                    >
-                      Details
-                    </Button>
+                  <Card.Footer style={{ borderTopStyle: "none" }}>
+                    <Link to={`/ships/${ship.name}`}>
+                      <Button
+                        variant="outline-secondary"
+                        style={{ marginTop: "auto" }}
+                        
+                      >
+                        Details
+                      </Button>
+                    </Link>
                   </Card.Footer>
                 </Card>
               ))}

@@ -4,3 +4,74 @@
   height: 100%;
   min-height: 100vh;
 }
+.searchInput {
+  border-radius: 17px;
+  border-style: hidden;
+  margin-top: 2vh;
+  text-align: center;
+  font-size: 15px;
+  padding: 5px;
+  border-color: #c2adae;
+  box-shadow: 3px 4px 0px 0px #899599;
+  text-shadow: 0px 1px 0px #e1e2ed;
+  background-color: #ededed;
+}
+.searchInput :focus {
+  outline: none !important;
+}
+#paginationButton {
+  box-shadow: 3px 4px 0px 0px #899599;
+  margin-right: 0.5vh;
+  margin-top: 2vh;
+  background-color: #ededed;
+  border-radius: 15px;
+  border: 1px solid #d6bcd6;
+  display: inline-block;
+  cursor: pointer;
+  color: #3a8a9e;
+  font-size: 12px;
+  padding: 7px 25px;
+  text-shadow: 0px 1px 0px #e1e2ed;
+  margin-bottom: 2vh;
+}
+#paginationButton :hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card {
+  padding: 4vh;
+  width: 16rem;
+  opacity: 80%;
+  height: 30rem;
+  border: #ededed;
+  background-color: aliceblue;
+  border-radius: 10%;
+  box-shadow: 3px 4px 0px 0px #899599;
+}
+.card img {
+  width: 100%;
+  height: 40%;
+  border-radius: 5%;
+  box-shadow: 3px 4px 0px 0px #c1c8ca;
+}
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.card h3{
+  margin-top: 1vh;
+}
+.footer {
+  margin-bottom: 0px;
+}
+
+.loading{
+  animation: rotation 0.5s infinite linear;
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

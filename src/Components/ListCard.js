@@ -1,17 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import ShipCard from "./ShipCard"
-import { Button, Card, Pagination } from "react-bootstrap";
-
+import Loading from "./Loading";
 export default function ListCard() {
   const [ships, setShips] = useState([]);
   const [isloading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [search, setSearch] = useState("");
-  
-
 
   useEffect(() => {
     getShip();
@@ -37,7 +33,11 @@ export default function ListCard() {
 
     for (let i = 1; i <= numberOfPages; i++) {
       buttons.push(
-        <button onClick={() => setCurrentPage(i)} disabled={currentPage === i}>
+        <button
+          id="paginationButton"
+          onClick={() => setCurrentPage(i)}
+          disabled={currentPage === i}
+        >
           {i}
         </button>
       );
@@ -46,23 +46,25 @@ export default function ListCard() {
     return buttons;
   };
 
-  
-
   return (
     <>
       {isloading ? (
-        <div>yükleniyor...</div>
+       <Loading />
       ) : (
         <div className="container">
           <div>
             <div>
               <input
+                className="searchInput"
+                placeholder="Search"
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               ></input>
+              
               <br></br>
               <button
+                id="paginationButton"
                 disabled={!ships.previous}
                 onClick={() => setCurrentPage(currentPage - 1)}
               >
@@ -70,6 +72,7 @@ export default function ListCard() {
               </button>
               {getPaginationButtons()}
               <button
+                id="paginationButton"
                 disabled={!ships.next}
                 onClick={() => setCurrentPage(currentPage + 1)}
               >
@@ -77,48 +80,32 @@ export default function ListCard() {
               </button>
             </div>
             <div
+              className="cardsDiv"
               style={{
                 display: "flex",
                 gap: 10,
                 flexWrap: "wrap",
                 width: "100%",
                 justifyContent: "center",
+                paddingBottom: "2vh",
               }}
             >
               {ships.results.map((ship, key) => (
+                <div className="card" key={key}>
+                  <img src={require (`../images/${ship.name}.jpg`)} />
+                  <h3>{ship.name} </h3>
+                  <p> {ship.model}</p>
+                  <p> Hyperdrive Rating : {ship.hyperdrive_rating} </p>
+
+                  <footer className="footer">  <Link to={`/ships/${ship.name}/${window.btoa(ship.url)}`} >
+                    <button
+                      id="paginationButton"
+                    >
+                      Details
+                    </button>
+                  </Link></footer>
                 
-                <Card
-                  className="mt-3 mb-3"
-                  key={key}
-                  style={{
-                    width: "18rem",
-                    opacity: "80%",
-                    minHeight: "content",
-                  }}
-                >
-                  <Card.Img
-                    variant="top"
-                    src="https://frpnet.net/wp-content/uploads/2015/12/millennium-falcon-star-wars.jpeg"
-                  />
-                  <Card.Body>
-                    <Card.Title>{ship.name}</Card.Title>
-                    <Card.Text>{ship.model}</Card.Text>
-                    <Card.Text>
-                      Hyperdrive Rating : {ship.hyperdrive_rating}
-                    </Card.Text>
-                  </Card.Body>
-                  <Card.Footer style={{ borderTopStyle: "none" }}>
-                    <Link to={`/ships/${ship.name}`}>
-                      <Button
-                        variant="outline-secondary"
-                        style={{ marginTop: "auto" }}
-                        
-                      >
-                        Details
-                      </Button>
-                    </Link>
-                  </Card.Footer>
-                </Card>
+                </div>
               ))}
             </div>
           </div>

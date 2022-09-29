@@ -13,7 +13,7 @@ export default function App() {
         <Routes>
           {" "}
           <Route path="/" element={<Home />}></Route>
-          <Route path="/ships/:name" element={<ShipCard />}></Route>
+          <Route path="/ships/:name/:encodedUrl" element={<ShipCard />}></Route>
         </Routes>
       </Router>
     </div>

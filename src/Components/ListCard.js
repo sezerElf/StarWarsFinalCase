@@ -11,7 +11,12 @@ export default function ListCard() {
 
   useEffect(() => {
     getShip();
-  }, [currentPage, search]);
+  }, [currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+    getShip();
+  }, [search]);
 
   async function getShip() {
     try {
@@ -19,8 +24,8 @@ export default function ListCard() {
         `https://swapi.dev/api/starships/?page=${currentPage}&search=${search}`
       );
       setShips(ship.data);
+      console.log(ships)
       setNumberOfPages(Math.ceil(ship.data.count / 10));
-      console.log(ships);
     } catch (error) {
       setShips({});
     } finally {
@@ -34,7 +39,7 @@ export default function ListCard() {
     for (let i = 1; i <= numberOfPages; i++) {
       buttons.push(
         <button
-          id="paginationButton"
+          className={`myButton ${i === currentPage ? "active" : ""}`}
           onClick={() => setCurrentPage(i)}
           disabled={currentPage === i}
         >
@@ -49,7 +54,7 @@ export default function ListCard() {
   return (
     <>
       {isloading ? (
-       <Loading />
+        <Loading />
       ) : (
         <div className="container">
           <div>
@@ -61,10 +66,10 @@ export default function ListCard() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               ></input>
-              
+
               <br></br>
               <button
-                id="paginationButton"
+                className="myButton"
                 disabled={!ships.previous}
                 onClick={() => setCurrentPage(currentPage - 1)}
               >
@@ -72,7 +77,7 @@ export default function ListCard() {
               </button>
               {getPaginationButtons()}
               <button
-                id="paginationButton"
+                className="myButton"
                 disabled={!ships.next}
                 onClick={() => setCurrentPage(currentPage + 1)}
               >
@@ -92,19 +97,17 @@ export default function ListCard() {
             >
               {ships.results.map((ship, key) => (
                 <div className="card" key={key}>
-                  <img src={require (`../images/${ship.name}.jpg`)} />
+                  <img src={require(`../images/${ship.name}.jpg`)} />
                   <h3>{ship.name} </h3>
-                  <p> {ship.model}</p>
+                  <p>Model : {ship.model}</p>
                   <p> Hyperdrive Rating : {ship.hyperdrive_rating} </p>
 
-                  <footer className="footer">  <Link to={`/ships/${ship.name}/${window.btoa(ship.url)}`} >
-                    <button
-                      id="paginationButton"
-                    >
-                      Details
-                    </button>
-                  </Link></footer>
-                
+                  <Link
+                    style={{ marginTop: "auto" }}
+                    to={`/ships/${ship.name}/${window.btoa(ship.url)}`}
+                  >
+                    <button className="myButton">Details</button>
+                  </Link>
                 </div>
               ))}
             </div>

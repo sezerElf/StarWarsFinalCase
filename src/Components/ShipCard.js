@@ -25,9 +25,9 @@ export default function ShipCard() {
       <div style={{ textAlign: "start" }}>
         <Link to={"/"}>
           <button
-            id="paginationButton"
+            className="myButton"
             style={{ marginTop: "8vh", marginLeft: "9vh" }}
-            className="back-button"
+           
           >
             back
           </button>
@@ -39,7 +39,6 @@ export default function ShipCard() {
           width: "50vh",
           marginLeft: "auto",
           marginRight: "auto",
-          paddingTop: "8vh",
           paddingBottom:"3vh"
         }}
       >

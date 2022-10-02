@@ -14,7 +14,6 @@ export default function ListCard() {
   }, [currentPage]);
 
   useEffect(() => {
-    setCurrentPage(1);
     getShip();
   }, [search]);
 
@@ -27,7 +26,7 @@ export default function ListCard() {
       console.log(ships)
       setNumberOfPages(Math.ceil(ship.data.count / 10));
     } catch (error) {
-      setShips({});
+      setShips([]);
     } finally {
       setIsLoading(false);
     }
@@ -51,6 +50,8 @@ export default function ListCard() {
     return buttons;
   };
 
+  if(search !== "" && currentPage !== 1) return null;
+
   return (
     <>
       {isloading ? (
@@ -64,7 +65,10 @@ export default function ListCard() {
                 placeholder="Search"
                 type="text"
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => {
+                  setCurrentPage(1);
+                  setSearch(e.target.value);
+                }}
               ></input>
 
               <br></br>
